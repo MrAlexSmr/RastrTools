@@ -1,0 +1,2 @@
+;function RastrTools() {
+	"use strict";
