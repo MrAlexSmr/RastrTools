@@ -1,4 +1,4 @@
-# RastrTools (v0.1.1-beta)
+# RastrTools (v0.2.1-beta)
 
 Self-sufficient repo containing source code of the drawing library.
 

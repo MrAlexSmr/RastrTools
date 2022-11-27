@@ -28,6 +28,7 @@ COMPILER_FLAGS = \
 	--target=wasm32-unknown-unknown-wasm \
 	-Wall \
 	-Werror \
+	-Wno-strict-prototypes \
 	-Wno-incompatible-library-redeclaration \
 	-Wno-gnu-union-cast \
 	-Oz \

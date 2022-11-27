@@ -78,7 +78,7 @@ this.layers = {
 	 * @param {Number} src u32 address on the layer
 	 * @return {Boolean}
 	 */
-	copyLayer: (dest, src) => 1===m.copy(dest>>>0, src>>>0),
+	copyLayer: (dest, src) => 1===m.copy(dest>>>0, src>>>0, 0),
 
 	/**
 	 * Moves pixels of destination layer be given offset
@@ -169,13 +169,14 @@ this.layers = {
 	 * @param {Boolean} force into the given layer ignoring clip and compose
 	 */
 	putImageData: (lyr, imageData, x, y, force) => {
-		var i, j, x_, y_, addr, bits, imgWidth, imgHeight, lyrWidth, lyrHeight, offsetX, offsetY;
+		var i, j, x_, y_, addr, bits, extra, imgWidth, imgHeight, lyrWidth, lyrHeight, offsetX, offsetY;
 		x_ = x|0;
 		y_ = y|0;
 		addr = lyr>>>0;
+		extra = m.layers_get_extra();
 		imgWidth = imageData.width;
 		imgHeight = imageData.height;
-		bits = force ? lyrBytes(addr) : lyrBytes(m.layers_get_extra());
+		bits = force ? lyrBytes(addr) : lyrBytes(extra);
 		lyrWidth = m.layers_get_width();
 		lyrHeight = m.layers_get_height();
 		if (0 === x_ && 0 === y_ && imgWidth === lyrWidth && imgHeight === lyrHeight) {
@@ -184,6 +185,11 @@ this.layers = {
 			if (x_ >= 0 && y_ >= 0 &&
 				lyrWidth >= (x_ + imgWidth) && lyrHeight >= (y_ + imgHeight)) {
 				j = 0;
+
+				// May be necessary to clear extra layer
+				// to clean it up from previos artifacts,
+				// especially if the layer has been saved in history before putting image data:
+				m.clear_in_range(extra, extra + lyrWidth * lyrHeight, 0);
 			} else {
 				offsetX = offsetY = 0;
 				if ((x + imgWidth) > lyrWidth) {
@@ -213,7 +219,7 @@ this.layers = {
 			}
 		}
 		if (!force) {
-			m.copy(addr, m.layers_get_extra(), 0);
+			m.copy(addr, extra, 0);
 		}
 	},
 

@@ -133,9 +133,11 @@ PUBLIC(const uint32_t)				compression_compress(
 /*
  * Unsafe. Copy pixels from source to destination layer
  * Do not use this as "move pixels" on same layer!
+ * Depends on compose operation!
  */
 PUBLIC(const int)					copy(
-										uint32_t *dest, const uint32_t *src);
+										uint32_t *dest, const uint32_t *src,
+										const int ignore_compose_op);
 
 /* Unsafe. Low-level method. Copies data of one stream to another */
 PUBLIC(void)						copy_in_range(
@@ -325,11 +327,11 @@ PUBLIC(const uint32_t)				palette_get_max_size();
 
 /* Gets nearest color to the given value from all available colors in palette */
 PUBLIC(const uint32_t)				palette_find_nearest_color(
-										const uint32_t value, const int skipAlpha);
+										const uint32_t value, const int skip_alpha);
 
 /* Reduces colors of the destination layer */
 PUBLIC(const int)					palette_apply(
-										uint32_t *layer, const int skipAlpha);
+										uint32_t *layer, const int skip_alpha);
 
 /* ------------------------------------------------------------------------- */
 

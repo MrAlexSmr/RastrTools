@@ -37,7 +37,7 @@ void move(
 	if (1 == intersects)
 	{
 		data = (uint32_t*)layers_get_extra();
-		copy(data, layer);
+		copy(data, layer, 1);
 		if (1 == should_clear) clear(layer, clear_color);
 	}
 	else
