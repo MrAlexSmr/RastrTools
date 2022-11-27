@@ -40,8 +40,6 @@ In case there is a need to make changes in wasm module:
 ./run.sh build
 ```
 
-Then, visit http://localhost:8000/demo/history.html to check those visualy (for example).
-
 ## Feedback
 
 For almost any questions write me at smorchkov.oleksandr@gmail.com
